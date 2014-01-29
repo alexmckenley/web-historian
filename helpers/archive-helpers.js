@@ -26,18 +26,75 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
+exports.readListOfUrls = function(cb){
+  fs.readFile(exports.paths.list, 'utf8', function (err, data) {
+    console.log(typeof data, data);
+    data = data.split('\n').map(function(v){
+      return v.trim();
+    });
+    cb(data);
+  });
 };
 
-exports.isUrlInList = function(){
+exports.isUrlInList = function(url, cb){
+  exports.readListOfUrls(function(data) {
+    var result = false;
+    data.forEach(function(v) {
+      if(url === v) {
+        result = true;
+      }
+    });
+    cb(result);
+  });
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(url){
+  fs.appendFile(exports.paths.list, "\n"+url, function(err) {
+    if(err) throw err;
+  });
 };
 
-exports.isURLArchived = function(){
+exports.isUrlArchived = function(url, cb){
+  cb = cb || function() {};
+  var results = false;
+  fs.readdir(exports.paths.archivedSites, function(err, files) {
+    files.forEach(function(v) {
+      if(v === url) {
+        results = true;
+      }
+    });
+    cb(results);
+  });
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(url){
 };
+
+exports.readListOfUrls(function(data){
+  console.log("Data: ", data);
+});
+
+exports.isUrlInList("www.google.com", function(result) {
+  console.log(result);
+});
+
+exports.addUrlToList("extraloyal.net");
+
+exports.isUrlArchived("www.google.com", function (result) {
+  console.log("Is archived: ", result);
+});
+
+exports.isUrlArchived("www.google.cofdm", function (result) {
+  console.log("Is archived: ",result);
+});
+
+
+
+
+
+
+
+
+
+
 
