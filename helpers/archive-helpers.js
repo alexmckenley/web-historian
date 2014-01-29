@@ -27,8 +27,8 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(cb){
+  cb = cb || function() {};
   fs.readFile(exports.paths.list, 'utf8', function (err, data) {
-    console.log(typeof data, data);
     data = data.split('\n').map(function(v){
       return v.trim();
     });
@@ -37,6 +37,7 @@ exports.readListOfUrls = function(cb){
 };
 
 exports.isUrlInList = function(url, cb){
+  cb = cb || function() {};
   exports.readListOfUrls(function(data) {
     var result = false;
     data.forEach(function(v) {
