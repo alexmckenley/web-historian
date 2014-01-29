@@ -70,24 +70,6 @@ exports.isUrlArchived = function(url, cb){
 exports.downloadUrls = function(url){
 };
 
-exports.readListOfUrls(function(data){
-  console.log("Data: ", data);
-});
-
-exports.isUrlInList("www.google.com", function(result) {
-  console.log(result);
-});
-
-exports.addUrlToList("extraloyal.net");
-
-exports.isUrlArchived("www.google.com", function (result) {
-  console.log("Is archived: ", result);
-});
-
-exports.isUrlArchived("www.google.cofdm", function (result) {
-  console.log("Is archived: ",result);
-});
-
 
 
 
