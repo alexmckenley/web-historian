@@ -49,9 +49,16 @@ exports.isUrlInList = function(url, cb){
   });
 };
 
-exports.addUrlToList = function(url){
-  fs.appendFile(exports.paths.list, "\n"+url, function(err) {
-    if(err) throw err;
+exports.addUrlToList = function(url, cb){
+  exports.isUrlInList(url, function(result) {
+    if(result) {
+      cb(false);
+    } else {
+      fs.appendFile(exports.paths.list, url+"\n", function(err) {
+        if(err) throw err;
+        cb(true);
+      });
+    }
   });
 };
 
