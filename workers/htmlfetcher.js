@@ -9,7 +9,7 @@ archive.readListOfUrls(archive.paths.list, function (urls){
           archive.downloadUrl(url);
         } else {
           console.log(url, " is already in the archive.");
-        }        
+        }
       }
     });
   });
