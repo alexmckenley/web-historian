@@ -29,10 +29,10 @@ exports.getPath = function (req) {
 exports.collectData = function(req, cb) {
   var data = '';
   req.on('data', function(v) {
-    console.log("V: ", v);
     data += v;
   });
   req.on('end', function(){
+    console.log("POST Data: ", exports.parseQuery(data));
     cb(exports.parseQuery(data));
   });
 };
@@ -79,7 +79,7 @@ exports.addSite = function(req, res) {
         path = archive.paths["siteAssets"] + "/loading.html";
         statusCode = 302;
       } else {
-        path = archive.paths["archivedSites"] + "/" + url;
+        path = archive.paths["archivedSites"] + "/" + obj.url;
         statusCode = 200;
       }
       exports.serveAssets(res, path, statusCode);
